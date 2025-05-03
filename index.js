@@ -72,9 +72,10 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB Connected");
     seedDefaultAdmin(); // Call it after DB connects
-    app.listen(process.env.PORT || 5000, '0.0.0.0', () => {
-      console.log(`🚀 Server running at http://0.0.0.0:${process.env.PORT || 5000}`);
+    app.listen(process.env.PORT, '0.0.0.0', () => {
+      console.log(`🚀 Server running at http://0.0.0.0:${process.env.PORT}`);
     });
+    
     
   })
   .catch(err => console.error("❌ DB Connection Error:", err));
