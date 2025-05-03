@@ -7,13 +7,26 @@ require('dotenv').config();
 
 const app = express();
 
-// Define CORS options first
+const cors = require('cors');
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://bogantiles.onrender.com'
+];
+
 const corsOptions = {
-  origin: 'http://localhost:5173',  // Your frontend URL
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 };
 
-// Use CORS middleware with the defined options
 app.use(cors(corsOptions));
+
 
 app.use(express.json());
 // Before serving static files, apply CORS middleware for the uploads
