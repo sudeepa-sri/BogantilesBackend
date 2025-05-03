@@ -64,16 +64,16 @@ app.post('/api/logout', (req, res) => {
     res.status(200).send('Logged out successfully');
   });
 });
-
+app.get('/', (req, res) => {
+  res.send('Backend is running!');
+});
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB Connected");
-    seedDefaultAdmin();
-    
-    // Listen on dynamic PORT or fallback to 5000 for local development
-    app.listen(process.env.PORT || 5000, '0.0.0.0', () => {
-      console.log(`🚀 Server running at http://0.0.0.0:${process.env.PORT || 5000}`);
+    seedDefaultAdmin(); // Call it after DB connects
+    app.listen(process.env.PORT, '0.0.0.0', () => {
+      console.log(`🚀 Server running at http://0.0.0.0:${process.env.PORT}`);
     });
   })
   .catch(err => console.error("❌ DB Connection Error:", err));
